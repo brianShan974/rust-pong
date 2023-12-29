@@ -74,4 +74,15 @@ impl Scene {
         self.clear_right_paddles();
     }
 
+    pub fn has_no_left_paddles(&self) -> bool {
+        self.left_paddles.is_empty()
+    }
+
+    pub fn has_no_right_paddles(&self) -> bool {
+        self.right_paddles.is_empty()
+    }
+
+    pub fn has_no_balls(&self) -> bool {
+        self.balls.is_empty()
+    }
 }
