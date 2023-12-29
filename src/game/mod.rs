@@ -7,4 +7,4 @@ pub mod ball;
 pub mod operation;
 
 // game state module
-pub mod game_state;
+pub mod game;
