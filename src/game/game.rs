@@ -44,4 +44,9 @@ impl Game {
         self.state = GameState::Running;
         Ok(())
     }
+
+    pub fn randomize(&mut self, left_paddle_count: usize, right_paddle_count: usize, ball_count: usize) {
+        self.scene.clear_paddles();
+        self.scene.clear_balls();
+    }
 }

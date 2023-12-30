@@ -4,11 +4,38 @@ use std::ops::{
     Mul, MulAssign,
     Div, DivAssign,
 };
+use std::f32::consts::TAU;
+
+use rand::rngs::ThreadRng;
+use rand::Rng;
+use rand::thread_rng;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec2 {
-    pub x: f64,
-    pub y: f64,
+    pub x: f32,
+    pub y: f32,
+}
+
+impl Vec2 {
+    pub fn new(x: f32, y: f32) -> Self {
+        Self {
+            x,
+            y,
+        }
+    }
+
+    pub fn random_with_magnitude(magnitude: f32, randomizer: Option<&mut ThreadRng>) -> Self {
+        let direction: f32 = if let Some(rng) = randomizer {
+            rng.gen_range(0.0..=TAU)
+        } else {
+            thread_rng().gen_range(0.0..=TAU)
+        };
+
+        Self {
+            x: magnitude * direction.cos(),
+            y: magnitude * direction.sin(),
+        }
+    }
 }
 
 impl Add for Vec2 {
@@ -47,10 +74,10 @@ impl SubAssign for Vec2 {
     }
 }
 
-impl Mul<f64> for Vec2 {
+impl Mul<f32> for Vec2 {
     type Output = Self;
 
-    fn mul(self, rhs: f64) -> Self::Output {
+    fn mul(self, rhs: f32) -> Self::Output {
         Self {
             x: self.x * rhs,
             y: self.y * rhs,
@@ -58,10 +85,10 @@ impl Mul<f64> for Vec2 {
     }
 }
 
-impl Div<f64> for Vec2 {
+impl Div<f32> for Vec2 {
     type Output = Self;
 
-    fn div(self, rhs: f64) -> Self::Output {
+    fn div(self, rhs: f32) -> Self::Output {
         Self {
             x: self.x / rhs,
             y: self.y / rhs,
@@ -69,21 +96,21 @@ impl Div<f64> for Vec2 {
     }
 }
 
-impl MulAssign<f64> for Vec2 {
-    fn mul_assign(&mut self, rhs: f64) {
+impl MulAssign<f32> for Vec2 {
+    fn mul_assign(&mut self, rhs: f32) {
         self.x *= rhs;
         self.y *= rhs;
     }
 }
 
-impl DivAssign<f64> for Vec2 {
-    fn div_assign(&mut self, rhs: f64) {
+impl DivAssign<f32> for Vec2 {
+    fn div_assign(&mut self, rhs: f32) {
         self.x /= rhs;
         self.y /= rhs;
     }
 }
 
-impl Mul<Vec2> for f64 {
+impl Mul<Vec2> for f32 {
     type Output = Vec2;
 
     fn mul(self, rhs: Vec2) -> Self::Output {
@@ -100,11 +127,3 @@ impl Default for Vec2 {
     }
 }
 
-impl Vec2 {
-    pub fn new(x: f64, y: f64) -> Self {
-        Self {
-            x,
-            y,
-        }
-    }
-}

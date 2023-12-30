@@ -5,6 +5,8 @@ use super::scene::SCREEN_WIDTH;
 use crate::game::paddle;
 use crate::math_utils::vec2::Vec2;
 
+const DEFAULT_RADIUS: u8 = 3;
+
 pub struct Ball {
     pos: Vec2,
     vel: Vec2,
@@ -14,6 +16,14 @@ pub struct Ball {
 impl Ball {
     pub fn new(pos: Vec2, vel: Vec2, radius: u8) -> Self {
         Self { pos, vel, radius }
+    }
+
+    pub fn generate_with_vel(vel: Vec2) -> Self {
+        Self {
+            pos: Vec2::default(),
+            vel,
+            radius: DEFAULT_RADIUS,
+        }
     }
 
     pub fn get_pos(&self) -> &Vec2 {
@@ -53,7 +63,7 @@ impl Default for Ball {
         Self {
             pos: Vec2::default(),
             vel: Vec2::default(),
-            radius: 3,
+            radius: DEFAULT_RADIUS,
         }
     }
 }
