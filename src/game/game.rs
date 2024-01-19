@@ -34,18 +34,29 @@ impl Game {
 
     pub fn start(&mut self) -> Result<(), String> {
         if self.scene.has_no_balls() {
-            return Err(String::from("Error: you cannot start a game without a ball."))
+            return Err(String::from(
+                "Error: you cannot start a game without a ball.",
+            ));
         } else if self.scene.has_no_left_paddles() {
-            return Err(String::from("Error: you cannot start a game without a left paddle."))
+            return Err(String::from(
+                "Error: you cannot start a game without a left paddle.",
+            ));
         } else if self.scene.has_no_right_paddles() {
-            return Err(String::from("Error: you cannot start a game without a right paddle."))
+            return Err(String::from(
+                "Error: you cannot start a game without a right paddle.",
+            ));
         }
 
         self.state = GameState::Running;
         Ok(())
     }
 
-    pub fn randomize(&mut self, left_paddle_count: usize, right_paddle_count: usize, ball_count: usize) {
+    pub fn randomize(
+        &mut self,
+        left_paddle_count: usize,
+        right_paddle_count: usize,
+        ball_count: usize,
+    ) {
         self.scene.clear_paddles();
         self.scene.clear_balls();
     }

@@ -5,3 +5,4 @@ enum Operations {
     Down(Paddle),
     Stay,
 }
+

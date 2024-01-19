@@ -1,14 +1,9 @@
-use std::ops::{
-    Add, AddAssign,
-    Sub, SubAssign,
-    Mul, MulAssign,
-    Div, DivAssign,
-};
 use std::f32::consts::TAU;
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use rand::rngs::ThreadRng;
-use rand::Rng;
 use rand::thread_rng;
+use rand::Rng;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec2 {
@@ -18,10 +13,7 @@ pub struct Vec2 {
 
 impl Vec2 {
     pub fn new(x: f32, y: f32) -> Self {
-        Self {
-            x,
-            y,
-        }
+        Self { x, y }
     }
 
     pub fn random_with_magnitude(magnitude: f32, randomizer: Option<&mut ThreadRng>) -> Self {
@@ -120,10 +112,6 @@ impl Mul<Vec2> for f32 {
 
 impl Default for Vec2 {
     fn default() -> Self {
-        Self {
-            x: 0.0,
-            y: 0.0,
-        }
+        Self { x: 0.0, y: 0.0 }
     }
 }
-

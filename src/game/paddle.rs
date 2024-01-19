@@ -5,3 +5,4 @@ pub struct Paddle {
     width: u8,
     height: u8,
 }
+

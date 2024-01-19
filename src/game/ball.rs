@@ -36,24 +36,24 @@ impl Ball {
 
     pub fn bounce_after_collision(&mut self, collision: Collision) {
         use Collision::*;
-        use Edges::{Top, Bottom};
+        use Edges::{Bottom, Top};
         self.reset_pos(&collision);
         match collision {
             WithEdge(Top) | WithEdge(Bottom) => self.vel.y *= -1.0,
             WithPaddle(paddle) => self.vel.x *= -1.0,
-            _ => {},
+            _ => {}
         }
     }
 
     fn reset_pos(&mut self, collision: &Collision) {
         use Collision::*;
-        use Edges::{Top, Bottom};
+        use Edges::{Bottom, Top};
         match *collision {
             WithEdge(Top) => {
-                // if self.pos.y + 
+                // if self.pos.y +
                 todo!("Implement reset_pos");
             }
-            _ => {},
+            _ => {}
         }
     }
 }
