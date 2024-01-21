@@ -1,3 +1,5 @@
+use rand::rngs::ThreadRng;
+
 use super::paddle::Paddle;
 use super::scene::Edges;
 use crate::math_utils::vec2::Vec2;
@@ -25,6 +27,14 @@ impl Ball {
         Self {
             pos: Vec2::default(),
             vel,
+            radius: DEFAULT_RADIUS,
+        }
+    }
+
+    pub fn random_centered_ball(randomizer: Option<&mut ThreadRng>) -> Self {
+        Self {
+            pos: Vec2::default(),
+            vel: Vec2::random_with_magnitude(DEFAULT_BALL_SPEED, randomizer),
             radius: DEFAULT_RADIUS,
         }
     }
