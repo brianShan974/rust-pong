@@ -1,3 +1,5 @@
+use rand::rngs::ThreadRng;
+
 use super::{ball::Ball, paddle::Paddle};
 
 use super::paddle::DEFAULT_PADDLE_WIDTH;
@@ -88,5 +90,21 @@ impl Scene {
 
     pub fn has_no_balls(&self) -> bool {
         self.balls.is_empty()
+    }
+
+    pub fn construct_default_scene_with_2_balls(rng: &mut ThreadRng) -> Self {
+        use Edges::*;
+        Self {
+            left_paddles: vec![Paddle::default_left_paddle(), Paddle::default_left_paddle()],
+            right_paddles: vec![
+                Paddle::default_right_paddle(),
+                Paddle::default_right_paddle(),
+            ],
+            balls: vec![
+                Ball::random_centered_ball(rng),
+                Ball::random_centered_ball(rng),
+            ],
+            edges: [Top, Bottom, Left, Right],
+        }
     }
 }
