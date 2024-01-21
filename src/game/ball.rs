@@ -5,7 +5,8 @@ use super::scene::SCREEN_WIDTH;
 use crate::game::paddle;
 use crate::math_utils::vec2::Vec2;
 
-const DEFAULT_RADIUS: u8 = 3;
+pub const DEFAULT_RADIUS: u8 = 3;
+pub const DEFAULT_BALL_SPEED: f32 = (SCREEN_WIDTH / 200) as f32;
 
 pub struct Ball {
     pos: Vec2,

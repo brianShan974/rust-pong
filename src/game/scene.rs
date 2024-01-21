@@ -1,7 +1,11 @@
 use super::{ball::Ball, paddle::Paddle};
 
+use super::paddle::DEFAULT_PADDLE_WIDTH;
+
 pub const SCREEN_WIDTH: u16 = 800;
-pub const SCREEN_HEIGHT: u16 = 800;
+pub const SCREEN_HEIGHT: u16 = 400;
+
+pub const PADDLE_MARGIN: u8 = DEFAULT_PADDLE_WIDTH;
 
 pub enum Edges {
     Top,

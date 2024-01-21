@@ -1,3 +1,6 @@
+use crate::game::paddle;
+
+use super::operation::Operations;
 use super::scene::Scene;
 
 enum GameState {
@@ -49,6 +52,15 @@ impl Game {
 
         self.state = GameState::Running;
         Ok(())
+    }
+
+    pub fn update(&mut self, op: Operations) {
+        use Operations::*;
+        match op {
+            Up(paddle) => {}
+            Down(paddle) => {}
+            Stay => {}
+        };
     }
 
     pub fn randomize(

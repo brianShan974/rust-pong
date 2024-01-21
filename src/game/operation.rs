@@ -1,8 +1,7 @@
 use super::paddle::Paddle;
 
-enum Operations {
+pub enum Operations {
     Up(Paddle),
     Down(Paddle),
     Stay,
 }
-
