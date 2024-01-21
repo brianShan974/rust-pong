@@ -55,6 +55,18 @@ impl Paddle {
         }
     }
 
+    pub fn get_pos(&self) -> &Vec2 {
+        &self.pos
+    }
+
+    pub fn get_width(&self) -> u16 {
+        self.width
+    }
+
+    pub fn get_height(&self) -> u16 {
+        self.height
+    }
+
     pub fn is_left(&self) -> bool {
         if let Sides::Left = self.side {
             true
