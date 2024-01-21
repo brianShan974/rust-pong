@@ -47,6 +47,10 @@ impl Ball {
         &self.vel
     }
 
+    pub fn get_radius(&self) -> u16 {
+        self.radius
+    }
+
     pub fn bounce_after_collision(&mut self, collision: Collision) {
         use Collision::*;
         use Edges::{Bottom, Top};
@@ -65,8 +69,8 @@ impl Ball {
                 if paddle.is_left() {
                     self.pos.x = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH + self.radius) as f32;
                 } else {
-                    self.pos.x = SCREEN_WIDTH as f32
-                        - (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH + self.radius) as f32
+                    self.pos.x =
+                        (SCREEN_WIDTH - (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH + self.radius)) as f32
                 }
             }
             _ => {
@@ -94,7 +98,7 @@ impl Default for Ball {
     }
 }
 
-pub enum Collision {
-    WithEdge(Edges),
-    WithPaddle(Paddle),
+pub enum Collision<'a> {
+    WithEdge(&'a Edges),
+    WithPaddle(&'a Paddle),
 }
