@@ -18,16 +18,16 @@ enum Sides {
 }
 
 pub struct Paddle {
-    position: Vec2,
+    pos: Vec2,
     width: u8,
     height: u8,
     side: Sides,
 }
 
 impl Paddle {
-    pub fn new(position: Vec2, width: u8, height: u8, side: Sides) -> Self {
+    pub fn new(pos: Vec2, width: u8, height: u8, side: Sides) -> Self {
         Self {
-            position,
+            pos,
             width,
             height,
             side,
@@ -36,7 +36,7 @@ impl Paddle {
 
     pub fn default_left_paddle() -> Self {
         Self {
-            position: Vec2::new(DEFAULT_LEFT_CENTER_X, (SCREEN_HEIGHT / 2) as f32),
+            pos: Vec2::new(DEFAULT_LEFT_CENTER_X, (SCREEN_HEIGHT / 2) as f32),
             width: PADDLE_MARGIN as u8,
             height: DEFAULT_PADDLE_HEIGHT,
             side: Sides::Left,
@@ -45,7 +45,7 @@ impl Paddle {
 
     pub fn default_right_paddle() -> Self {
         Self {
-            position: Vec2::new(
+            pos: Vec2::new(
                 (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2) as f32,
                 (SCREEN_HEIGHT / 2) as f32,
             ),
@@ -72,16 +72,16 @@ impl Paddle {
     }
 
     pub fn move_up(&mut self) {
-        let final_y = self.position.y - DEFAULT_PADDLE_SPEED;
+        let final_y = self.pos.y - DEFAULT_PADDLE_SPEED;
         if final_y >= 0.0 {
-            self.position.y -= DEFAULT_PADDLE_SPEED;
+            self.pos.y -= DEFAULT_PADDLE_SPEED;
         }
     }
 
     pub fn move_down(&mut self) {
-        let final_y = self.position.y + DEFAULT_PADDLE_SPEED;
+        let final_y = self.pos.y + DEFAULT_PADDLE_SPEED;
         if final_y <= SCREEN_HEIGHT as f32 {
-            self.position.y += DEFAULT_PADDLE_SPEED;
+            self.pos.y += DEFAULT_PADDLE_SPEED;
         }
     }
 }
