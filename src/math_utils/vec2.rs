@@ -5,6 +5,8 @@ use rand::rngs::ThreadRng;
 use rand::thread_rng;
 use rand::Rng;
 
+use crate::game::scene::{SCREEN_HEIGHT, SCREEN_WIDTH};
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec2 {
     pub x: f32,
@@ -112,6 +114,9 @@ impl Mul<&Vec2> for f32 {
 
 impl Default for Vec2 {
     fn default() -> Self {
-        Self { x: 0.0, y: 0.0 }
+        Self {
+            x: (SCREEN_WIDTH / 2) as f32,
+            y: (SCREEN_HEIGHT / 2) as f32,
+        }
     }
 }
