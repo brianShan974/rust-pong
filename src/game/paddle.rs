@@ -12,18 +12,25 @@ pub const DEFAULT_PADDLE_SPEED: f32 = DEFAULT_BALL_SPEED;
 
 pub const DEFAULT_LEFT_CENTER_X: f32 = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2) as f32;
 
+enum Sides {
+    Left,
+    Right,
+}
+
 pub struct Paddle {
     position: Vec2,
     width: u8,
     height: u8,
+    side: Sides,
 }
 
 impl Paddle {
-    pub fn new(position: Vec2, width: u8, height: u8) -> Self {
+    pub fn new(position: Vec2, width: u8, height: u8, side: Sides) -> Self {
         Self {
             position,
             width,
             height,
+            side,
         }
     }
 
@@ -32,6 +39,7 @@ impl Paddle {
             position: Vec2::new(DEFAULT_LEFT_CENTER_X, (SCREEN_HEIGHT / 2) as f32),
             width: PADDLE_MARGIN as u8,
             height: DEFAULT_PADDLE_HEIGHT,
+            side: Sides::Left,
         }
     }
 
@@ -43,6 +51,23 @@ impl Paddle {
             ),
             width: PADDLE_MARGIN as u8,
             height: DEFAULT_PADDLE_HEIGHT,
+            side: Sides::Right,
+        }
+    }
+
+    pub fn is_left(&self) -> bool {
+        if let Sides::Left = self.side {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn is_right(&self) -> bool {
+        if let Sides::Right = self.side {
+            true
+        } else {
+            false
         }
     }
 
