@@ -1,21 +1,23 @@
 use super::paddle::Paddle;
 use super::scene::Edges;
-use super::scene::SCREEN_HEIGHT;
-use super::scene::SCREEN_WIDTH;
-use crate::game::paddle;
 use crate::math_utils::vec2::Vec2;
 
-pub const DEFAULT_RADIUS: u8 = 3;
+use super::paddle::DEFAULT_PADDLE_WIDTH;
+use super::scene::PADDLE_MARGIN;
+use super::scene::SCREEN_HEIGHT;
+use super::scene::SCREEN_WIDTH;
+
+pub const DEFAULT_RADIUS: u16 = 3;
 pub const DEFAULT_BALL_SPEED: f32 = (SCREEN_WIDTH / 200) as f32;
 
 pub struct Ball {
     pos: Vec2,
     vel: Vec2,
-    radius: u8,
+    radius: u16,
 }
 
 impl Ball {
-    pub fn new(pos: Vec2, vel: Vec2, radius: u8) -> Self {
+    pub fn new(pos: Vec2, vel: Vec2, radius: u16) -> Self {
         Self { pos, vel, radius }
     }
 
@@ -48,14 +50,27 @@ impl Ball {
 
     fn reset_pos(&mut self, collision: &Collision) {
         use Collision::*;
-        use Edges::{Bottom, Top};
-        match *collision {
-            WithEdge(Top) => {
-                // if self.pos.y +
-                todo!("Implement reset_pos");
+        match collision {
+            WithPaddle(paddle) => {
+                if paddle.is_left() {
+                    self.pos.x = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH + self.radius) as f32;
+                } else {
+                    self.pos.x = SCREEN_WIDTH as f32
+                        - (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH + self.radius) as f32
+                }
             }
-            _ => {}
-        }
+            _ => {
+                if self.pos.y + self.radius as f32 > SCREEN_HEIGHT as f32 {
+                    self.pos.y = (SCREEN_HEIGHT - self.radius) as f32;
+                } else if (self.pos.y - self.radius as f32) < 0.0 {
+                    self.pos.y = self.radius as f32;
+                }
+            }
+        };
+    }
+
+    pub fn update_pos(&mut self) {
+        self.pos += &self.vel;
     }
 }
 
