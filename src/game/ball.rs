@@ -31,10 +31,10 @@ impl Ball {
         }
     }
 
-    pub fn random_centered_ball(randomizer: Option<&mut ThreadRng>) -> Self {
+    pub fn random_centered_ball(rng: &mut ThreadRng) -> Self {
         Self {
             pos: Vec2::default(),
-            vel: Vec2::random_with_magnitude(DEFAULT_BALL_SPEED, randomizer),
+            vel: Vec2::random_with_magnitude(DEFAULT_BALL_SPEED, rng),
             radius: DEFAULT_RADIUS,
         }
     }

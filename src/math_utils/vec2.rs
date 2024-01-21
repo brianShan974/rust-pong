@@ -2,7 +2,6 @@ use std::f32::consts::TAU;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use rand::rngs::ThreadRng;
-use rand::thread_rng;
 use rand::Rng;
 
 use crate::game::scene::{SCREEN_HEIGHT, SCREEN_WIDTH};
@@ -18,13 +17,8 @@ impl Vec2 {
         Self { x, y }
     }
 
-    pub fn random_with_magnitude(magnitude: f32, randomizer: Option<&mut ThreadRng>) -> Self {
-        let direction: f32 = if let Some(rng) = randomizer {
-            rng.gen_range(0.0..=TAU)
-        } else {
-            thread_rng().gen_range(0.0..=TAU)
-        };
-
+    pub fn random_with_magnitude(magnitude: f32, rng: &mut ThreadRng) -> Self {
+        let direction: f32 = rng.gen_range(0.0..=TAU);
         Self {
             x: magnitude * direction.cos(),
             y: magnitude * direction.sin(),
