@@ -1,8 +1,10 @@
 use rand::rngs::ThreadRng;
 
+use super::ball::Collision;
+use super::operation::Operations;
 use super::{ball::Ball, paddle::Paddle};
 
-use super::paddle::DEFAULT_PADDLE_WIDTH;
+use super::paddle::{self, Sides, DEFAULT_PADDLE_WIDTH};
 
 pub const SCREEN_WIDTH: u16 = 800;
 pub const SCREEN_HEIGHT: u16 = 400;
@@ -20,7 +22,6 @@ pub struct Scene {
     left_paddles: Vec<Paddle>,
     right_paddles: Vec<Paddle>,
     balls: Vec<Ball>,
-    edges: [Edges; 4],
 }
 
 impl Default for Scene {
@@ -30,7 +31,6 @@ impl Default for Scene {
             left_paddles: Vec::new(),
             right_paddles: Vec::new(),
             balls: Vec::new(),
-            edges: [Top, Bottom, Left, Right],
         }
     }
 }
@@ -104,7 +104,47 @@ impl Scene {
                 Ball::random_centered_ball(rng),
                 Ball::random_centered_ball(rng),
             ],
-            edges: [Top, Bottom, Left, Right],
         }
+    }
+
+    pub fn update_scene(&mut self, op: Operations) -> Option<Sides> {
+        let mut winner: Option<Sides> = None;
+        match op {
+            Operations::Up(paddle) => paddle.move_up(),
+            Operations::Down(paddle) => paddle.move_down(),
+            Operations::Stay => {}
+        }
+
+        for ball in self.balls.iter_mut() {
+            ball.update_pos();
+            let radius_in_f32 = ball.get_radius() as f32;
+
+            use Collision::*;
+            use Edges::*;
+
+            // detect collision with top and bottom edge
+            if (ball.get_pos().y - radius_in_f32) < 0.0 {
+                ball.bounce_after_collision(WithEdge(&Top));
+            } else if (ball.get_pos().y + radius_in_f32) > SCREEN_HEIGHT as f32 {
+                ball.bounce_after_collision(WithEdge(&Bottom));
+            }
+
+            // detect collision with paddles
+            for paddle in self.left_paddles.iter() {
+                if let Some(collision) = ball.collides_with(paddle) {
+                    ball.bounce_after_collision(collision);
+                }
+            }
+
+            // detect if the current game is over
+            // if so, set the winner variable to left or right
+            if (ball.get_pos().x + radius_in_f32) < 0.0 {
+                winner = Some(Sides::Right);
+            } else if (ball.get_pos().x - radius_in_f32) > SCREEN_WIDTH as f32 {
+                winner = Some(Sides::Left);
+            }
+        }
+
+        winner
     }
 }
