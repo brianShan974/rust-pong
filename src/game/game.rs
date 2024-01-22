@@ -1,6 +1,10 @@
+use rand::rngs::ThreadRng;
+use rand::thread_rng;
+
 use crate::game::paddle;
 
 use super::operation::Operations;
+use super::paddle::{Paddle, Sides};
 use super::scene::Scene;
 
 enum GameState {
@@ -8,10 +12,11 @@ enum GameState {
     Running,
 }
 
-struct Game {
+pub struct Game {
     state: GameState,
     scene: Scene,
     scores: (u32, u32),
+    rng: ThreadRng,
 }
 
 impl Game {
@@ -20,6 +25,7 @@ impl Game {
             state: GameState::Paused,
             scene: Scene::default(),
             scores: (0, 0),
+            rng: thread_rng(),
         }
     }
 
@@ -54,22 +60,41 @@ impl Game {
         Ok(())
     }
 
-    pub fn update(&mut self, op: Operations) {
-        use Operations::*;
-        match op {
-            Up(paddle) => {}
-            Down(paddle) => {}
-            Stay => {}
-        };
+    pub fn update(&mut self, op: Operations) -> Option<Sides> {
+        if let GameState::Running = self.state {
+            let winner = self.scene.update_scene(op);
+            if let Some(winner) = winner {
+                self.state = GameState::Paused;
+                if let Sides::Left = winner {
+                    self.scores.0 += 1;
+                } else {
+                    self.scores.1 += 1;
+                }
+            }
+            winner
+        } else {
+            None
+        }
     }
 
-    pub fn randomize(
-        &mut self,
-        left_paddle_count: usize,
-        right_paddle_count: usize,
-        ball_count: usize,
-    ) {
-        self.scene.clear_paddles();
-        self.scene.clear_balls();
+    pub fn get_left_paddles(&self) -> &Vec<Paddle> {
+        self.scene.get_left_paddles()
     }
+
+    pub fn start_default_game_with_2_balls(&mut self) -> Result<(), String> {
+        self.scene = Scene::construct_default_scene_with_2_balls(&mut self.rng);
+        self.start()
+    }
+
+    // pub fn randomize(
+    //     &mut self,
+    //     left_paddle_count: usize,
+    //     right_paddle_count: usize,
+    //     ball_count: usize,
+    // ) {
+    //     self.scene.clear_paddles();
+    //     self.scene.clear_balls();
+    //
+    //     todo!("Implement randomize method for game.");
+    // }
 }
