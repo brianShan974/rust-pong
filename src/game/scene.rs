@@ -6,10 +6,10 @@ use super::{ball::Ball, paddle::Paddle};
 
 use super::paddle::{self, Sides, DEFAULT_PADDLE_WIDTH};
 
-pub const SCREEN_WIDTH: u16 = 800;
-pub const SCREEN_HEIGHT: u16 = 400;
+pub const SCREEN_WIDTH: u32 = 800;
+pub const SCREEN_HEIGHT: u32 = 600;
 
-pub const PADDLE_MARGIN: u16 = DEFAULT_PADDLE_WIDTH;
+pub const PADDLE_MARGIN: u32 = DEFAULT_PADDLE_WIDTH;
 
 pub enum Edges {
     Top,
@@ -90,6 +90,18 @@ impl Scene {
 
     pub fn has_no_balls(&self) -> bool {
         self.balls.is_empty()
+    }
+
+    pub fn get_left_paddles(&self) -> &Vec<Paddle> {
+        &self.left_paddles
+    }
+
+    pub fn get_right_paddles(&self) -> &Vec<Paddle> {
+        &self.right_paddles
+    }
+
+    pub fn get_balls(&self) -> &Vec<Ball> {
+        &self.balls
     }
 
     pub fn construct_default_scene_with_2_balls(rng: &mut ThreadRng) -> Self {
