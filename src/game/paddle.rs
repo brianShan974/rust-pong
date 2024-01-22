@@ -12,6 +12,7 @@ pub const DEFAULT_PADDLE_SPEED: f32 = DEFAULT_BALL_SPEED;
 
 pub const DEFAULT_LEFT_CENTER_X: f32 = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2) as f32;
 
+#[derive(Debug, Clone, Copy)]
 pub enum Sides {
     Left,
     Right,
