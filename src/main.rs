@@ -4,6 +4,7 @@ use sdl2::pixels::Color;
 
 mod game;
 mod math_utils;
+mod render;
 
 use crate::game::{
     game::Game,
@@ -39,11 +40,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let game_mode = GameMode::Default;
 
-    let game = if let GameMode::Default = game_mode {
-        Game::new()
+    let mut game = Game::new();
+
+    if let GameMode::Default = game_mode {
+        game.start_default_game_with_2_balls();
     } else {
-        unimplemented!("Custom games are not yet implemented!")
-    };
+        unimplemented!("Custom games not yet implemented!")
+    }
 
     println!("Hello, world!");
     Ok(())
