@@ -29,7 +29,7 @@ impl<'a, 'b> Renderer<'a, 'b> {
         Self { game, canvas }
     }
 
-    pub fn get_left_paddles(&self) -> Vec<Rect> {
+    fn get_left_paddle_rects(&self) -> Vec<Rect> {
         self.game
             .get_left_paddles()
             .iter()
@@ -37,7 +37,7 @@ impl<'a, 'b> Renderer<'a, 'b> {
             .collect()
     }
 
-    pub fn get_right_paddles(&self) -> Vec<Rect> {
+    fn get_right_paddle_rects(&self) -> Vec<Rect> {
         self.game
             .get_right_paddles()
             .iter()
@@ -45,11 +45,25 @@ impl<'a, 'b> Renderer<'a, 'b> {
             .collect()
     }
 
-    pub fn get_balls(&self) -> Vec<Rect> {
+    fn get_ball_rects(&self) -> Vec<Rect> {
         self.game
             .get_balls()
             .iter()
             .map(get_rect_from_ball)
             .collect()
+    }
+
+    fn get_all_rects(&self) -> Vec<Rect> {
+        let mut all_rects = Vec::new();
+
+        let mut left_paddles = self.get_left_paddle_rects();
+        let mut right_paddles = self.get_right_paddle_rects();
+        let mut balls = self.get_ball_rects();
+
+        all_rects.append(&mut left_paddles);
+        all_rects.append(&mut right_paddles);
+        all_rects.append(&mut balls);
+
+        all_rects
     }
 }
