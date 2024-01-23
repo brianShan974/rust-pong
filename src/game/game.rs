@@ -3,6 +3,7 @@ use rand::thread_rng;
 
 use crate::game::paddle;
 
+use super::ball::Ball;
 use super::operation::Operations;
 use super::paddle::{Paddle, Sides};
 use super::scene::Scene;
@@ -83,6 +84,10 @@ impl Game {
 
     pub fn get_right_paddles(&self) -> &Vec<Paddle> {
         self.scene.get_right_paddles()
+    }
+
+    pub fn get_balls(&self) -> &Vec<Ball> {
+        self.scene.get_balls()
     }
 
     pub fn start_default_game_with_2_balls(&mut self) {
