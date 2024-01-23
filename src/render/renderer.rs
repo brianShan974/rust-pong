@@ -1,12 +1,16 @@
-use sdl2::rect::{Point, Rect};
+use sdl2::{
+    rect::{Point, Rect},
+    render::WindowCanvas,
+};
 
 use crate::{
     game::{ball::Ball, game::Game, paddle::Paddle},
     math_utils::vec2::Vec2,
 };
 
-pub struct Renderer<'a> {
+pub struct Renderer<'a, 'b> {
     game: &'a Game,
+    canvas: &'b mut WindowCanvas,
 }
 
 fn get_rect_from_paddle(paddle: &Paddle) -> Rect {
@@ -20,9 +24,9 @@ fn get_rect_from_ball(ball: &Ball) -> Rect {
     Rect::from_center::<Point>(pos.into(), width, width)
 }
 
-impl<'a> Renderer<'a> {
-    pub fn new(game: &'a Game) -> Self {
-        Self { game }
+impl<'a, 'b> Renderer<'a, 'b> {
+    pub fn new(game: &'a Game, canvas: &'b mut WindowCanvas) -> Self {
+        Self { game, canvas }
     }
 
     pub fn get_left_paddles(&self) -> Vec<Rect> {
