@@ -3,6 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use rand::rngs::ThreadRng;
 use rand::Rng;
+use sdl2::rect::Point;
 
 use crate::game::scene::{SCREEN_HEIGHT, SCREEN_WIDTH};
 
@@ -23,6 +24,12 @@ impl Vec2 {
             x: magnitude * direction.cos(),
             y: magnitude * direction.sin(),
         }
+    }
+}
+
+impl Into<Point> for &Vec2 {
+    fn into(self) -> Point {
+        Point::new(self.x as i32, self.y as i32)
     }
 }
 
