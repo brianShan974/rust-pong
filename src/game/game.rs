@@ -81,6 +81,10 @@ impl Game {
         self.scene.get_left_paddles()
     }
 
+    pub fn get_right_paddles(&self) -> &Vec<Paddle> {
+        self.scene.get_right_paddles()
+    }
+
     pub fn start_default_game_with_2_balls(&mut self) {
         self.scene = Scene::construct_default_scene_with_2_balls(&mut self.rng);
         self.start().unwrap();
