@@ -11,6 +11,8 @@ use crate::game::{
     scene::{SCREEN_HEIGHT, SCREEN_WIDTH},
 };
 
+pub const DEFAULT_BACKGROUND_COLOR: Color = Color::BLACK;
+
 // a default game is a game with 2 paddles on each side and 2 balls
 // a custom game can be customized, but it is not yet implemented
 enum GameMode {
@@ -32,7 +34,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut canvas = window.into_canvas().build()?;
 
-    canvas.set_draw_color(Color::RGB(0, 0, 0));
+    canvas.set_draw_color(DEFAULT_BACKGROUND_COLOR);
     canvas.clear();
     canvas.present();
 
