@@ -1,4 +1,5 @@
 use sdl2::{
+    pixels::Color,
     rect::{Point, Rect},
     render::WindowCanvas,
 };
@@ -6,7 +7,10 @@ use sdl2::{
 use crate::{
     game::{ball::Ball, game::Game, paddle::Paddle},
     math_utils::vec2::Vec2,
+    DEFAULT_BACKGROUND_COLOR,
 };
+
+pub const DEFAULT_RECT_COLOR: Color = Color::WHITE;
 
 pub struct Renderer<'a, 'b> {
     game: &'a Game,
@@ -65,5 +69,13 @@ impl<'a, 'b> Renderer<'a, 'b> {
         all_rects.append(&mut balls);
 
         all_rects
+    }
+
+    fn render_to_canvas(&mut self) -> Result<(), String> {
+        self.canvas.set_draw_color(DEFAULT_BACKGROUND_COLOR);
+        self.canvas.clear();
+        self.canvas.set_draw_color(DEFAULT_RECT_COLOR);
+        self.canvas.fill_rects(&self.get_all_rects())?;
+        Ok(())
     }
 }
