@@ -6,9 +6,13 @@ mod game;
 mod math_utils;
 mod render;
 
-use crate::game::{
-    game::Game,
-    scene::{SCREEN_HEIGHT, SCREEN_WIDTH},
+use crate::{
+    game::{
+        game::Game,
+        operation::Operations,
+        scene::{SCREEN_HEIGHT, SCREEN_WIDTH},
+    },
+    render::renderer::Renderer,
 };
 
 pub const DEFAULT_BACKGROUND_COLOR: Color = Color::BLACK;
@@ -38,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     canvas.clear();
     canvas.present();
 
-    let mut event_pump = sdl_context.event_pump()?;
+    // let event_pump = sdl_context.event_pump()?;
 
     let game_mode = GameMode::Default;
 
@@ -48,6 +52,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         game.start_default_game_with_2_balls();
     } else {
         unimplemented!("Custom games not yet implemented!")
+    }
+
+    let mut renderer: Renderer = Renderer::new(&mut game, canvas);
+
+    for _ in 0..10 {
+        renderer.update_game();
+        renderer.render_to_canvas()?;
+        renderer.present();
     }
 
     println!("Hello, world!");
