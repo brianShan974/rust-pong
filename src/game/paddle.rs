@@ -11,6 +11,8 @@ pub const DEFAULT_PADDLE_WIDTH: u32 = DEFAULT_PADDLE_HEIGHT / 8;
 pub const DEFAULT_PADDLE_SPEED: f32 = DEFAULT_BALL_SPEED;
 
 pub const DEFAULT_LEFT_CENTER_X: f32 = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2) as f32;
+pub const DEFAULT_RIGHT_CENTER_X: f32 =
+    (SCREEN_WIDTH - PADDLE_MARGIN - DEFAULT_PADDLE_WIDTH / 2) as f32;
 
 #[derive(Debug, Clone, Copy)]
 pub enum Sides {
@@ -46,10 +48,7 @@ impl Paddle {
 
     pub fn default_right_paddle() -> Self {
         Self {
-            pos: Vec2::new(
-                (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2) as f32,
-                (SCREEN_HEIGHT / 2) as f32,
-            ),
+            pos: Vec2::new(DEFAULT_RIGHT_CENTER_X, (SCREEN_HEIGHT / 2) as f32),
             width: PADDLE_MARGIN,
             height: DEFAULT_PADDLE_HEIGHT,
             side: Sides::Right,
