@@ -1,10 +1,10 @@
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
 
-use crate::game::paddle;
+// use crate::game::paddle;
 
 use super::ball::Ball;
-use super::operation::Operations;
+use super::operation::Operation;
 use super::paddle::{Paddle, Sides};
 use super::scene::Scene;
 
@@ -61,9 +61,9 @@ impl Game {
         Ok(())
     }
 
-    pub fn update(&mut self, op: Operations) -> Option<Sides> {
+    pub fn update(&mut self, ops: Vec<Operation>) -> Option<Sides> {
         if let GameState::Running = self.state {
-            let winner = self.scene.update_scene(op);
+            let winner = self.scene.update_scene(ops);
             if let Some(winner) = winner {
                 self.state = GameState::Paused;
                 if let Sides::Left = winner {
