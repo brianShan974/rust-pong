@@ -1,7 +1,15 @@
-use super::paddle::Paddle;
+use super::paddle::Sides;
 
-pub enum Operations<'a> {
-    Up(&'a mut Paddle),
-    Down(&'a mut Paddle),
+#[derive(Debug, Clone, Copy)]
+pub enum OperationTypes {
+    Up,
+    Down,
     Stay,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct Operation {
+    pub op_type: OperationTypes,
+    pub side: Sides,
+    pub index: usize,
 }
