@@ -117,11 +117,11 @@ impl Scene {
         }
     }
 
-    pub fn update_scene(&mut self, ops: Vec<Operation>) -> Option<Sides> {
+    pub fn update_scene(&mut self, ops: &mut Vec<Operation>) -> Option<Sides> {
         let mut winner: Option<Sides> = None;
         use OperationTypes::*;
         use Sides::*;
-        for op in ops {
+        while let Some(op) = ops.pop() {
             if let Stay = op.op_type {
                 continue;
             }
@@ -152,8 +152,15 @@ impl Scene {
                 ball.bounce_after_collision(WithEdge(&Bottom));
             }
 
-            // detect collision with paddles
+            // detect collision with left paddles
             for paddle in self.left_paddles.iter() {
+                if let Some(collision) = ball.collides_with(paddle) {
+                    ball.bounce_after_collision(collision);
+                }
+            }
+
+            // detect collision with right paddles
+            for paddle in self.right_paddles.iter() {
                 if let Some(collision) = ball.collides_with(paddle) {
                     ball.bounce_after_collision(collision);
                 }
