@@ -1,4 +1,4 @@
-# rust_pong
+# rust-pong
 My implementation of pong, one of the first video games in history, in rust. It is a reinforcement learning project.
 
 This is a simple template repository. It has the game logic and very basic rendering. It does not read any input from keyboard or mouse. You can add your own code if you want to read keyboard input.
