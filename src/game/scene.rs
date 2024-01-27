@@ -4,7 +4,7 @@ use super::ball::Collision;
 use super::operation::{Operation, OperationTypes};
 use super::{ball::Ball, paddle::Paddle};
 
-use super::paddle::{self, Sides, DEFAULT_PADDLE_WIDTH};
+use super::paddle::{Sides, DEFAULT_PADDLE_WIDTH};
 
 pub const SCREEN_WIDTH: u32 = 800;
 pub const SCREEN_HEIGHT: u32 = 600;
