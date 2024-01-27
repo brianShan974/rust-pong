@@ -34,7 +34,7 @@ impl Ball {
     pub fn random_centered_ball(rng: &mut ThreadRng) -> Self {
         Self {
             pos: Vec2::default(),
-            vel: Vec2::random_with_magnitude(DEFAULT_BALL_SPEED, rng),
+            vel: Vec2::random_with_magnitude(DEFAULT_BALL_SPEED, None, rng),
             radius: DEFAULT_RADIUS,
         }
     }
@@ -54,12 +54,12 @@ impl Ball {
     pub fn bounce_after_collision(&mut self, collision: Collision) {
         use Collision::*;
         use Edges::{Bottom, Top};
-        self.reset_pos(&collision);
         match collision {
             WithEdge(Top) | WithEdge(Bottom) => self.vel.y *= -1.0,
-            WithPaddle(paddle) => self.vel.x *= -1.0,
+            WithPaddle(_) => self.vel.x *= -1.0,
             _ => {}
         }
+        self.reset_pos(&collision);
     }
 
     fn reset_pos(&mut self, collision: &Collision) {
