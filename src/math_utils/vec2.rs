@@ -1,4 +1,4 @@
-use std::f32::consts::TAU;
+use std::f32::consts::{FRAC_PI_4, PI};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use rand::rngs::ThreadRng;
@@ -6,6 +6,8 @@ use rand::Rng;
 use sdl2::rect::Point;
 
 use crate::game::scene::{SCREEN_HEIGHT, SCREEN_WIDTH};
+
+pub const DEFAULT_ANGLE_RANGE: f32 = FRAC_PI_4;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec2 {
@@ -18,10 +20,17 @@ impl Vec2 {
         Self { x, y }
     }
 
-    pub fn random_with_magnitude(magnitude: f32, rng: &mut ThreadRng) -> Self {
-        let direction: f32 = rng.gen_range(0.0..=TAU);
+    pub fn random_with_magnitude(magnitude: f32, range: Option<f32>, rng: &mut ThreadRng) -> Self {
+        let bound: f32 = match range {
+            Some(range) => range,
+            None => DEFAULT_ANGLE_RANGE,
+        };
+
+        let direction: f32 = rng.gen_range(-bound..bound);
+        let side: f32 = if rng.gen_bool(1.0 / 2.0) { -1.0 } else { 1.0 };
+
         Self {
-            x: magnitude * direction.cos(),
+            x: magnitude * direction.cos() * side,
             y: magnitude * direction.sin(),
         }
     }
