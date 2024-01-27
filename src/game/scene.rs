@@ -1,7 +1,7 @@
 use rand::rngs::ThreadRng;
 
 use super::ball::Collision;
-use super::operation::Operations;
+use super::operation::{Operation, OperationTypes};
 use super::{ball::Ball, paddle::Paddle};
 
 use super::paddle::{self, Sides, DEFAULT_PADDLE_WIDTH};
@@ -26,7 +26,6 @@ pub struct Scene {
 
 impl Default for Scene {
     fn default() -> Self {
-        use Edges::*;
         Self {
             left_paddles: Vec::new(),
             right_paddles: Vec::new(),
@@ -105,7 +104,6 @@ impl Scene {
     }
 
     pub fn construct_default_scene_with_2_balls(rng: &mut ThreadRng) -> Self {
-        use Edges::*;
         Self {
             left_paddles: vec![Paddle::default_left_paddle(), Paddle::default_left_paddle()],
             right_paddles: vec![
@@ -119,12 +117,25 @@ impl Scene {
         }
     }
 
-    pub fn update_scene(&mut self, op: Operations) -> Option<Sides> {
+    pub fn update_scene(&mut self, ops: Vec<Operation>) -> Option<Sides> {
         let mut winner: Option<Sides> = None;
-        match op {
-            Operations::Up(paddle) => paddle.move_up(),
-            Operations::Down(paddle) => paddle.move_down(),
-            Operations::Stay => {}
+        use OperationTypes::*;
+        use Sides::*;
+        for op in ops {
+            if let Stay = op.op_type {
+                continue;
+            }
+
+            let paddle: &mut Paddle = match op.side {
+                Left => self.left_paddles.get_mut(op.index).unwrap(),
+                Right => self.right_paddles.get_mut(op.index).unwrap(),
+            };
+
+            match op.op_type {
+                Up => paddle.move_up(),
+                Down => paddle.move_down(),
+                _ => {}
+            }
         }
 
         for ball in self.balls.iter_mut() {
