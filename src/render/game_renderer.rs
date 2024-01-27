@@ -91,4 +91,12 @@ impl GameRenderer {
     pub fn present(&mut self) {
         self.canvas.present();
     }
+
+    pub fn start_default_game_with_2_balls(&mut self) {
+        self.game.start_default_game_with_2_balls();
+    }
+
+    pub fn reset_game(&mut self) {
+        self.game.reset();
+    }
 }
