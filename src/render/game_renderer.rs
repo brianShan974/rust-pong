@@ -8,6 +8,7 @@ use crate::{
     game::{
         ball::Ball,
         game::Game,
+        operation::Operation,
         paddle::{Paddle, Sides},
     },
     math_utils::vec2::Vec2,
@@ -75,8 +76,8 @@ impl GameRenderer {
         all_rects
     }
 
-    pub fn update_game(&mut self) -> Option<Sides> {
-        unimplemented!("update_game not implemented.")
+    pub fn update_game(&mut self, ops: &mut Vec<Operation>) -> Option<Sides> {
+        self.game.update(ops)
     }
 
     pub fn render_to_canvas(&mut self) -> Result<(), String> {
