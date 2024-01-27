@@ -1,4 +1,6 @@
 use std::error::Error;
+use std::thread::sleep;
+use std::time::Duration;
 
 use sdl2::pixels::Color;
 
@@ -9,13 +11,16 @@ mod render;
 use crate::{
     game::{
         game::Game,
-        operation::Operations,
+        operation::{Operation, OperationTypes},
+        paddle::Sides,
         scene::{SCREEN_HEIGHT, SCREEN_WIDTH},
     },
-    render::renderer::Renderer,
+    render::game_renderer::GameRenderer,
 };
 
 pub const DEFAULT_BACKGROUND_COLOR: Color = Color::BLACK;
+
+pub const FRAME_DURATION: Duration = Duration::from_millis(20);
 
 // a default game is a game with 2 paddles on each side and 2 balls
 // a custom game can be customized, but it is not yet implemented
@@ -54,12 +59,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         unimplemented!("Custom games not yet implemented!")
     }
 
-    let mut renderer: Renderer = Renderer::new(&mut game, canvas);
+    let mut renderer = GameRenderer::new(game, canvas);
+
+    let mut ops: Vec<Operation> = Vec::new();
 
     for _ in 0..10 {
-        renderer.update_game();
-        renderer.render_to_canvas()?;
-        renderer.present();
+        while let None = renderer.update_game(&mut ops) {
+            ops.push(Operation::new(OperationTypes::Up, Sides::Right, 0));
+            ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
+            renderer.render_to_canvas()?;
+            renderer.present();
+            sleep(FRAME_DURATION);
+        }
+
+        // renderer.reset_game();
+        renderer.start_default_game_with_2_balls();
     }
 
     println!("Hello, world!");
