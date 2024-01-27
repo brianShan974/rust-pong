@@ -61,7 +61,7 @@ impl Game {
         Ok(())
     }
 
-    pub fn update(&mut self, ops: Vec<Operation>) -> Option<Sides> {
+    pub fn update(&mut self, ops: &mut Vec<Operation>) -> Option<Sides> {
         if let GameState::Running = self.state {
             let winner = self.scene.update_scene(ops);
             if let Some(winner) = winner {
@@ -101,6 +101,10 @@ impl Game {
     pub fn start_default_game_with_2_balls(&mut self) {
         self.scene = Scene::construct_default_scene_with_2_balls(&mut self.rng);
         self.start().unwrap();
+    }
+
+    pub fn reset(&mut self) {
+        unimplemented!("reset unimplemented!");
     }
 
     // pub fn randomize(
