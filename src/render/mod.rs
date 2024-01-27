@@ -1,1 +1,1 @@
-pub mod renderer;
+pub mod game_renderer;
