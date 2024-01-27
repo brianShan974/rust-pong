@@ -78,6 +78,14 @@ impl Game {
         }
     }
 
+    pub fn get_left_paddle_count(&self) -> usize {
+        self.get_left_paddles().len()
+    }
+
+    pub fn get_right_paddle_count(&self) -> usize {
+        self.get_right_paddles().len()
+    }
+
     pub fn get_left_paddles(&self) -> &Vec<Paddle> {
         self.scene.get_left_paddles()
     }
