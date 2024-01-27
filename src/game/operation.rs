@@ -13,3 +13,13 @@ pub struct Operation {
     pub side: Sides,
     pub index: usize,
 }
+
+impl Operation {
+    pub fn new(op_type: OperationTypes, side: Sides, index: usize) -> Self {
+        Self {
+            op_type,
+            side,
+            index,
+        }
+    }
+}
