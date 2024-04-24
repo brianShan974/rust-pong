@@ -64,7 +64,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut ops: Vec<Operation> = Vec::new();
 
     for _ in 0..10 {
-        while let None = renderer.update_game(&mut ops) {
+        while renderer.update_game(&mut ops).is_none() {
             ops.push(Operation::new(OperationTypes::Up, Sides::Right, 0));
             ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
             renderer.render_to_canvas()?;
