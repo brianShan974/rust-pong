@@ -21,6 +21,9 @@ use crate::{
 pub const DEFAULT_BACKGROUND_COLOR: Color = Color::BLACK;
 
 pub const FRAME_DURATION: Duration = Duration::from_millis(20);
+const FULL_SPEED: bool = false;
+
+const GAME_MODE: GameMode = GameMode::Default;
 
 // a default game is a game with 2 paddles on each side and 2 balls
 // a custom game can be customized, but it is not yet implemented
@@ -49,11 +52,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // let event_pump = sdl_context.event_pump()?;
 
-    let game_mode = GameMode::Default;
-
     let mut game = Game::new();
 
-    if let GameMode::Default = game_mode {
+    if let GameMode::Default = GAME_MODE {
         game.start_default_game_with_2_balls();
     } else {
         unimplemented!("Custom games not yet implemented!")
@@ -69,7 +70,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
             renderer.render_to_canvas()?;
             renderer.present();
-            sleep(FRAME_DURATION);
+            if !FULL_SPEED {
+                sleep(FRAME_DURATION);
+            }
         }
 
         // renderer.reset_game();
