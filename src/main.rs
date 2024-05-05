@@ -2,6 +2,8 @@ use std::error::Error;
 use std::thread::sleep;
 use std::time::Duration;
 
+use sdl2::event::Event;
+use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 
 mod game;
@@ -24,9 +26,13 @@ pub const FRAME_DURATION: Duration = Duration::from_millis(20);
 const FULL_SPEED: bool = false;
 
 const GAME_MODE: GameMode = GameMode::Default;
+const HUMAN_PLAYING: bool = true;
+
+const DEFAULT_NUMBER_OF_GAMES: u32 = 10;
 
 // a default game is a game with 2 paddles on each side and 2 balls
 // a custom game can be customized, but it is not yet implemented
+#[allow(dead_code)]
 enum GameMode {
     Default,
     Custom,
@@ -45,6 +51,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         .build()?;
 
     let mut canvas = window.into_canvas().build()?;
+    let mut event_pump = sdl_context.event_pump()?;
+    let mut should_quit = false;
 
     canvas.set_draw_color(DEFAULT_BACKGROUND_COLOR);
     canvas.clear();
@@ -64,19 +72,44 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut ops: Vec<Operation> = Vec::new();
 
-    for _ in 0..10 {
+    let mut i = 0;
+    loop {
+        if should_quit || i >= DEFAULT_NUMBER_OF_GAMES {
+            break;
+        }
+
+        i += 1;
+        // renderer.reset_game();
+        renderer.start_default_game_with_2_balls();
+
         while renderer.update_game(&mut ops).is_none() {
-            ops.push(Operation::new(OperationTypes::Up, Sides::Right, 0));
-            ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
+            for event in event_pump.poll_iter() {
+                match event {
+                    Event::Quit { .. }
+                    | Event::KeyDown {
+                        keycode: Some(Keycode::Escape),
+                        ..
+                    } => should_quit = true,
+                    Event::KeyDown {
+                        keycode: Some(key), ..
+                    } => {
+                        if HUMAN_PLAYING {
+                            if let Some(op) = Operation::from_key_code(key) {
+                                ops.push(op);
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            // ops.push(Operation::new(OperationTypes::Up, Sides::Right, 0));
+            // ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
             renderer.render_to_canvas()?;
             renderer.present();
             if !FULL_SPEED {
                 sleep(FRAME_DURATION);
             }
         }
-
-        // renderer.reset_game();
-        renderer.start_default_game_with_2_balls();
     }
 
     println!("Hello, world!");
