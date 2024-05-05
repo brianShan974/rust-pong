@@ -20,14 +20,25 @@ use crate::{
     render::game_renderer::GameRenderer,
 };
 
+/// The default background color.
 pub const DEFAULT_BACKGROUND_COLOR: Color = Color::BLACK;
 
+/// The time interval between each frame.
 pub const FRAME_DURATION: Duration = Duration::from_millis(20);
+/// Whether the game runs at full speed. If true, `FRAME_DURATION` will be ignored and each frame
+/// is rendered as soon as the calculation finished.
 const FULL_SPEED: bool = false;
 
+/// Whether it is a customized game or it is a default game. Customized games are not yet supported
+/// as it involves mapping keyboard inputs to control multiple paddles.
 const GAME_MODE: GameMode = GameMode::Default;
+/// Whether the game is being played by humans. If true, it reads keyboard inputs to control the
+/// paddles. If false, all input events are ignored except for
+/// `Event::KeyDown {keycode: Some(Keycode::Escape),..}`.
 const HUMAN_PLAYING: bool = true;
 
+/// The default number of games. It is set to 10 by default, so the program will terminate after 10
+/// games.
 const DEFAULT_NUMBER_OF_GAMES: u32 = 10;
 
 // a default game is a game with 2 paddles on each side and 2 balls
@@ -73,8 +84,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut ops: Vec<Operation> = Vec::new();
 
     let mut i = 0;
+    let number_of_games = DEFAULT_NUMBER_OF_GAMES;
     loop {
-        if should_quit || i >= DEFAULT_NUMBER_OF_GAMES {
+        if should_quit || i >= number_of_games {
             break;
         }
 
