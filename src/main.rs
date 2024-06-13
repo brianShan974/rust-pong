@@ -6,12 +6,12 @@ use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 
-mod game;
+mod game_and_scene;
 mod math_utils;
 mod render;
 
 use crate::{
-    game::{
+    game_and_scene::{
         game::Game,
         operation::{Operation, OperationTypes},
         paddle::Sides,
@@ -43,12 +43,21 @@ const DEFAULT_NUMBER_OF_GAMES: u32 = 10;
 
 // a default game is a game with 2 paddles on each side and 2 balls
 // a custom game can be customized, but it is not yet implemented
+/// There are 2 game modes in total, one is default and the other is custom.
+/// The default game is defined as a game such that:
+/// - there are 2 paddles on each side, so 4 paddles in total;
+/// - there are 2 balls in total;
+/// - the paddles and balls have default sizes and default initial positions;
+/// - the balls are launched from the center of the screen.
+/// Custom games allow you to modify any of the properties mentioned above.
 #[allow(dead_code)]
 enum GameMode {
     Default,
     Custom,
 }
 
+/// The main function. At this point, only the default game is implemented so the main function
+/// starts a default game.
 fn main() -> Result<(), Box<dyn Error>> {
     // These codes are copied from sdl2 docs
     // https://docs.rs/sdl2/latest/sdl2/
@@ -117,7 +126,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             // ops.push(Operation::new(OperationTypes::Up, Sides::Right, 0));
             // ops.push(Operation::new(OperationTypes::Down, Sides::Left, 1));
             renderer.render_to_canvas()?;
-            renderer.present();
             if !FULL_SPEED {
                 sleep(FRAME_DURATION);
             }
