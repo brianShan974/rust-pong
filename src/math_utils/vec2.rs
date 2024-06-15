@@ -1,4 +1,4 @@
-use std::f32::consts::{FRAC_PI_4, PI};
+use std::f32::consts::FRAC_PI_4;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use rand::rngs::ThreadRng;
@@ -45,10 +45,9 @@ impl Vec2 {
     }
 }
 
-impl Into<Point> for &Vec2 {
-    /// Supports conversion to sdl2 points.
-    fn into(self) -> Point {
-        Point::new(self.x as i32, self.y as i32)
+impl From<&Vec2> for Point {
+    fn from(vec: &Vec2) -> Self {
+        Self::new(vec.x as i32, vec.y as i32)
     }
 }
 
