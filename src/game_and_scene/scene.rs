@@ -6,11 +6,16 @@ use super::{ball::Ball, paddle::Paddle};
 
 use super::paddle::{Sides, DEFAULT_PADDLE_WIDTH};
 
+/// The default screen width.
 pub const SCREEN_WIDTH: u32 = 800;
+/// The default screen height.
 pub const SCREEN_HEIGHT: u32 = 600;
 
+/// The default margin on the left and the right of the screen. This is the distance between the
+/// left/right edge of the left/right paddles and the left/right edges.
 pub const PADDLE_MARGIN: u32 = DEFAULT_PADDLE_WIDTH;
 
+/// The 4 edges of the scene.
 pub enum Edges {
     Top,
     Bottom,
@@ -18,91 +23,102 @@ pub enum Edges {
     Right,
 }
 
+/// The scene struct. It contains vectors of left and right paddles and balls. Edges are not
+/// contained since there will always be 4 edges.
+#[derive(Default)]
 pub struct Scene {
     left_paddles: Vec<Paddle>,
     right_paddles: Vec<Paddle>,
     balls: Vec<Ball>,
 }
 
-impl Default for Scene {
-    fn default() -> Self {
-        Self {
-            left_paddles: Vec::new(),
-            right_paddles: Vec::new(),
-            balls: Vec::new(),
-        }
-    }
-}
-
 impl Scene {
+    /// Add balls into the scene.
     pub fn add_balls(&mut self, balls: Vec<Ball>) {
         self.balls.extend(balls);
     }
 
+    /// Clear all balls in the scene.
     pub fn clear_balls(&mut self) {
         self.balls.clear();
     }
 
+    /// First clear all balls, then add the provided balls.
     pub fn reset_balls(&mut self, balls: Vec<Ball>) {
         self.clear_balls();
         self.add_balls(balls);
     }
 
+    /// Add left paddles to the scene.
     pub fn add_left_paddles(&mut self, paddles: Vec<Paddle>) {
         self.left_paddles.extend(paddles);
     }
 
+    /// Add right paddles to the scene.
     pub fn add_right_paddles(&mut self, paddles: Vec<Paddle>) {
         self.right_paddles.extend(paddles);
     }
 
+    /// Clear all left paddles in the scene.
     pub fn clear_left_paddles(&mut self) {
         self.left_paddles.clear();
     }
 
+    /// Clear all right paddles in the scene.
     pub fn clear_right_paddles(&mut self) {
         self.right_paddles.clear();
     }
 
+    /// First clear all left paddles, then add the provided left paddles.
     pub fn reset_left_paddles(&mut self, paddles: Vec<Paddle>) {
         self.clear_left_paddles();
         self.add_left_paddles(paddles);
     }
 
+    /// First clear all right paddles, then add the provided right paddles.
     pub fn reset_right_paddles(&mut self, paddles: Vec<Paddle>) {
         self.clear_right_paddles();
         self.add_right_paddles(paddles);
     }
 
+    /// Clear all paddles in the scene.
     pub fn clear_paddles(&mut self) {
         self.clear_left_paddles();
         self.clear_right_paddles();
     }
 
+    /// Whether there is no left paddle in the scene.
     pub fn has_no_left_paddles(&self) -> bool {
         self.left_paddles.is_empty()
     }
 
+    /// Whether there is no right paddle in the scene.
     pub fn has_no_right_paddles(&self) -> bool {
         self.right_paddles.is_empty()
     }
 
+    /// Whether there is no ball in the scene.
     pub fn has_no_balls(&self) -> bool {
         self.balls.is_empty()
     }
 
+    /// Get all left paddles in the scene.
     pub fn get_left_paddles(&self) -> &Vec<Paddle> {
         &self.left_paddles
     }
 
+    /// Get all right paddles in the scene.
     pub fn get_right_paddles(&self) -> &Vec<Paddle> {
         &self.right_paddles
     }
 
+    /// Get all balls in the scene.
     pub fn get_balls(&self) -> &Vec<Ball> {
         &self.balls
     }
 
+    /// Construct a default scene. A default scene is defined as the scene in a default game, and
+    /// a default game is defined in `main.rs`.
     pub fn construct_default_scene_with_2_balls(rng: &mut ThreadRng) -> Self {
         Self {
             left_paddles: vec![Paddle::default_left_paddle(), Paddle::default_left_paddle()],
@@ -117,6 +133,8 @@ impl Scene {
         }
     }
 
+    /// Update the scene given a sequence of operations. Returns the winner of the current game if
+    /// any.
     pub fn update_scene(&mut self, ops: &mut Vec<Operation>) -> Option<Sides> {
         let mut winner: Option<Sides> = None;
         use OperationTypes::*;
