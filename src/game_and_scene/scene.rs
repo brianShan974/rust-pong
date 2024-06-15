@@ -4,7 +4,7 @@ use super::ball::Collision;
 use super::operation::{Operation, OperationTypes};
 use super::{ball::Ball, paddle::Paddle};
 
-use super::paddle::{Sides, DEFAULT_PADDLE_WIDTH};
+use super::paddle::DEFAULT_PADDLE_WIDTH;
 
 /// The default screen width.
 pub const SCREEN_WIDTH: u32 = 800;
@@ -17,9 +17,22 @@ pub const PADDLE_MARGIN: u32 = DEFAULT_PADDLE_WIDTH;
 
 /// The 4 edges of the scene.
 pub enum Edges {
+    /// The top edge.
     Top,
+    /// The bottom edge.
     Bottom,
+    /// The left edge.
     Left,
+    /// The right edge.
+    Right,
+}
+
+/// There are 2 sides in the game, that are left and right.
+#[derive(Debug, Clone, Copy)]
+pub enum Sides {
+    /// The left side of the scene.
+    Left,
+    /// The right side of the scene.
     Right,
 }
 
@@ -27,8 +40,11 @@ pub enum Edges {
 /// contained since there will always be 4 edges.
 #[derive(Default)]
 pub struct Scene {
+    /// The vector containing all left paddles.
     left_paddles: Vec<Paddle>,
+    /// The vector containing all right paddles.
     right_paddles: Vec<Paddle>,
+    /// The vector containing all balls.
     balls: Vec<Ball>,
 }
 

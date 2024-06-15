@@ -1,2 +1,2 @@
-/// Vec2 struct.
+/// The Vec2 struct.
 pub mod vec2;

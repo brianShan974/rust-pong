@@ -1,2 +1,2 @@
-/// The GameRenderer.
+/// The GameRenderer struct.
 pub mod game_renderer;

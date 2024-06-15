@@ -5,12 +5,7 @@ use sdl2::{
 };
 
 use crate::{
-    game_and_scene::{
-        ball::Ball,
-        game::Game,
-        operation::Operation,
-        paddle::{Paddle, Sides},
-    },
+    game_and_scene::{ball::Ball, game::Game, operation::Operation, paddle::Paddle, scene::Sides},
     math_utils::vec2::Vec2,
     DEFAULT_BACKGROUND_COLOR,
 };
@@ -22,7 +17,9 @@ pub const DEFAULT_RECT_COLOR: Color = Color::WHITE;
 /// The game renderer. It takes a game and a canvas to render the game onto the canvas. Currently
 /// it takes the ownership of both of them, but ideally it should take mutable references.
 pub struct GameRenderer {
+    /// The game struct that needs to be rendered.
     game: Game,
+    /// The canvas that the game is rendered onto.
     canvas: WindowCanvas,
 }
 

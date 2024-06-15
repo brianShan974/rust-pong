@@ -16,7 +16,9 @@ pub const DEFAULT_ANGLE_RANGE: f32 = FRAC_PI_4;
 /// integer types.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec2 {
+    /// The x component of the vec2.
     pub x: f32,
+    /// The y component of the vec2.
     pub y: f32,
 }
 

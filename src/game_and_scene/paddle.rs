@@ -1,5 +1,6 @@
 use crate::math_utils::vec2::Vec2;
 
+use super::scene::Sides;
 use super::scene::PADDLE_MARGIN;
 use super::scene::SCREEN_HEIGHT;
 use super::scene::SCREEN_WIDTH;
@@ -19,18 +20,15 @@ pub const DEFAULT_LEFT_CENTER_X: f32 = (PADDLE_MARGIN + DEFAULT_PADDLE_WIDTH / 2
 pub const DEFAULT_RIGHT_CENTER_X: f32 =
     (SCREEN_WIDTH - PADDLE_MARGIN - DEFAULT_PADDLE_WIDTH / 2) as f32;
 
-/// There are 2 sides in the game, that are left and right.
-#[derive(Debug, Clone, Copy)]
-pub enum Sides {
-    Left,
-    Right,
-}
-
 /// The paddle struct.
 pub struct Paddle {
+    /// The position of the center of the paddle.
     pos: Vec2,
+    /// The width of the paddle.
     width: u32,
+    /// The height of the paddle.
     height: u32,
+    /// The side the paddle is on.
     side: Sides,
 }
 

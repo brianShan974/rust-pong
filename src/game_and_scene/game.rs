@@ -5,8 +5,9 @@ use rand::thread_rng;
 
 use super::ball::Ball;
 use super::operation::Operation;
-use super::paddle::{Paddle, Sides};
+use super::paddle::Paddle;
 use super::scene::Scene;
+use super::scene::Sides;
 
 /// The state of the game is either running or paused.
 enum GameState {
@@ -16,9 +17,13 @@ enum GameState {
 
 /// The game struct.
 pub struct Game {
+    /// The state of the game. Either running or paused.
     state: GameState,
+    /// The game scene.
     scene: Scene,
+    /// The scores of both sides.
     scores: (u32, u32),
+    /// A random number generator instance.
     rng: ThreadRng,
 }
 

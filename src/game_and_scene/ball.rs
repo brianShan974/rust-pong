@@ -16,8 +16,11 @@ pub const DEFAULT_BALL_SPEED: f32 = (SCREEN_WIDTH / 200) as f32;
 
 /// The ball struct.
 pub struct Ball {
+    /// The position of the center of the ball.
     pos: Vec2,
+    /// The velocity of the ball. The unit is pixels per frame.
     vel: Vec2,
+    /// The radius of the ball. The unit is pixels.
     radius: u32,
 }
 

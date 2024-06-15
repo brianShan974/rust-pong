@@ -1,18 +1,17 @@
 // scene-related modules
-/// Ball struct.
+/// The Ball struct.
 pub mod ball;
-/// Paddle struct.
+/// The Paddle struct.
 pub mod paddle;
-/// Scene struct.
+/// The Sides enum and the Scene struct.
 pub mod scene;
 
 // operation-related modules
-/// Operation struct.
+/// The Operation struct and the OperationTypes enum.
 pub mod operation;
 
-/// GameMode enum.
+/// The GameMode enum.
 pub mod game_mode;
 
-// game state module
-/// Game struct.
+/// The Game struct.
 pub mod game;

@@ -1,12 +1,15 @@
-use super::paddle::Sides;
+use super::scene::Sides;
 
 use sdl2::keyboard::Keycode;
 
 /// There are 3 types of operations on each paddle in total, that are up, down and stay.
 #[derive(Debug, Clone, Copy)]
 pub enum OperationTypes {
+    /// The up operation.
     Up,
+    /// The down operation.
     Down,
+    /// The stay operation.
     Stay,
 }
 
@@ -14,8 +17,11 @@ pub enum OperationTypes {
 /// the paddles is on, and which index the paddle has.
 #[derive(Debug, Clone, Copy)]
 pub struct Operation {
+    /// The type of the operation, whether the operation is up, down or stay.
     pub op_type: OperationTypes,
+    /// The operation has to act on a paddle. This field determines which side the paddle is on.
     pub side: Sides,
+    /// The operation has to act on a paddle. This field determines the index of the paddle.
     pub index: usize,
 }
 
