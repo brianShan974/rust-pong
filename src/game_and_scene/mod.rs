@@ -10,6 +10,9 @@ pub mod scene;
 /// Operation struct.
 pub mod operation;
 
+/// GameMode enum.
+pub mod game_mode;
+
 // game state module
 /// Game struct.
 pub mod game;
