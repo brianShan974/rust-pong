@@ -15,7 +15,7 @@ and in order to run this game, simply use
 
 In a default game, there are 2 paddles on each side of the scene.
 In order to control the paddles on the left side, press `W` and `S` to move one of the paddles up and down, and press `A` and `D` to control the other.
-In order to control the paddles on the left side, press `Up` arrow key and `Down` arrow key to move one of the paddles up and down, and press `Left` arrow key and `Right` arrow key to control the other.
+In order to control the paddles on the right side, press `Up` arrow key and `Down` arrow key to move one of the paddles up and down, and press `Left` arrow key and `Right` arrow key to control the other.
 
 In order to exit the game, either use the close button, or press the `Esc` key.
 The game will only exit after the next time one of the balls flies out of the screen.
